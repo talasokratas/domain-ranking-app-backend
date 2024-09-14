@@ -18,8 +18,8 @@ class OpenPageRankService
 
     public function __construct()
     {
-        $this->api_url = env('OPEN_PAGE_RANK_API_URL', false);
-        $this->api_key = env('OPEN_PAGE_RANK_API_KEY', false);
+        $this->api_url = config('openrankapi.url');
+        $this->api_key = config('openrankapi.key');
         $this->client = new Client();
     }
 
