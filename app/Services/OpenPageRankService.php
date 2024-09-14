@@ -24,9 +24,11 @@ class OpenPageRankService
     }
 
     /**
+     * @param array $domains
+     * @return array
      * @throws OpenPageRankServiceException
      */
-    public function getPagesData(array $domains)
+    public function getPagesData(array $domains): array
     {
         $batchSize = 100; //set according to api response limit
         $batches = array_chunk($domains, $batchSize);
