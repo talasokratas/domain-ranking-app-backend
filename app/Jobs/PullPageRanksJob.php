@@ -5,13 +5,13 @@ namespace App\Jobs;
 use App\Exceptions\DomainsListFileNotFoundException;
 use App\Exceptions\OpenPageRankServiceException;
 use App\Models\DomainInfo;
+use App\Services\DomainListFromRemoteJsonService;
 use App\Services\OpenPageRankService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Http;
 
 class PullPageRanksJob implements ShouldQueue
 {
@@ -31,16 +31,10 @@ class PullPageRanksJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $response = Http::get(env('DOMAIN_LIST_JSON_FILE', false));
-        if ($response->successful()) {
-            $websites_list = $response->json();
-        } else {
-            throw new DomainsListFileNotFoundException();
-        }
-
-        $domains = collect($websites_list)->pluck('rootDomain')->toArray();
+        $domainListService = new DomainListFromRemoteJsonService();
         $rankService = new OpenPageRankService();
 
+        $domains = $domainListService->getDomainList();
         $rank_data = $rankService->getPagesData($domains);
 
         foreach ($rank_data as $page ) {
