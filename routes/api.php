@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Resources\DomainInfoResource;
-use App\Models\DomainInfo;
-use Illuminate\Http\Request;
+use App\Http\Controllers\DomainInfoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth.api_token')->get('/domains', function () {
-    return DomaininfoResource::collection(DomainInfo::paginate(100));
-});
+Route::middleware('auth.api_token')->get('/domains', [DomainInfoController::class, 'index']);
