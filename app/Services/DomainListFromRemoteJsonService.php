@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Http;
 
 class DomainListFromRemoteJsonService implements DomainListInterface
 {
+    private string $key = 'rootDomain';
+
     /**
      * @return array
      * @throws DomainsListFileNotFoundException
@@ -21,6 +23,6 @@ class DomainListFromRemoteJsonService implements DomainListInterface
             throw new DomainsListFileNotFoundException();
         }
 
-        return collect($websites_list)->pluck('rootDomain')->toArray();
+        return collect($websites_list)->pluck($this->key)->toArray();
     }
 }
