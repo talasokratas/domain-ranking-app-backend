@@ -1,66 +1,79 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Page Rank Metrics Collector
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
 
-## About Laravel
+This application is designed to collect page rank metrics for specified domains on a daily basis and expose the collected data through the app's API. It utilizes the Open Page Rank API to gather information for domains listed in a file.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instructions
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. **Configure Database**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    - Enter your MySQL credentials in the `.env` file.
+    - Run the following command to create the required database table:
+      ```bash
+      php artisan migrate
+      ```
 
-## Learning Laravel
+2. **Obtain API Key**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    - Register at [Open Page Rank](https://www.domcop.com/openpagerank/) to get free API access.
+    - Set the API key in the `.env` file under `OPEN_PAGE_RANK_API_KEY`. As of today, the key value is 'https://openpagerank.com/api/v1.0/getPageRank'.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+3. **Configure API Key**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    - Ensure the `OPEN_PAGE_RANK_API_KEY` in the `.env` file is set correctly.
 
-## Laravel Sponsors
+4. **Set Remote JSON File URL**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    - Provide the URL of the remote JSON file containing the domain list in the `.env` file under `DOMAIN_LIST_REMOTE_JSON_FILE`.
+    - If your domain file is hosted on GitHub, use the raw link format, e.g., `https://raw.githubusercontent.com/user/project/branch/filename.json`.
+    - The default key for domain names is set to "rootDomain". You can customize this key in the `DomainListFromRemoteJsonService` class.
 
-### Premium Partners
+5. **Schedule Data Collection**
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    - The application uses Laravel's scheduler to collect page data daily. Configure the interval in Laravel's schedule.
+    - Add the following command to your server’s cron job to execute it:
+      ```bash
+      cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+      ```
+    - For manual data updates, use the URL `/manual-import`.
 
-## Contributing
+6. **Configure API Access**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    - Set the app's API key in the `.env` file under `APP_API_KEY`.
+    - External applications must include this header in their requests to access the app's API:
+      ```plaintext
+      Authorization: your-api-key
+      ```
+    - An empty string can be used if no key is set.
 
-## Code of Conduct
+7. **Access Domain Data**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    - The list of domains with ranks is accessible via the following URL: `/api/domains`.
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+#read me above is generated by chat gpt from the text below :)
+#Introduction
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This is app is made to collect page rank metrics for specified domains on daily basis and 
+show collected data by using this app's API. 
+It uses Open Page Rank API to collect information for domains that are listed in file.
+
+#Instructions
+
+1. Enter mysql credentials in .env and run php artisan migrate to create required DB table
+2. Register on https://www.domcop.com/openpagerank/ to get free API access and key to OPEN_PAGE_RANK_API_KEY in .env file 
+3. Set value for OPEN_PAGE_RANK_API_KEY in .env, as of today it is 'https://openpagerank.com/api/v1.0/getPageRank' 
+4. Set a link to remote json file in DOMAIN_LIST_REMOTE_JSON_FILE in .env
+   If your domain file is on github then use a raw link format, eg.: 
+   'https://raw.githubusercontent.com/user/project/branch/filename.json'.
+   Default key for domain name is set to "rootDomain", you can your own in DomainListFromRemoteJsonService class.
+5. App uses laravel's schedule to collect page data daily. The interval of day is set in Laravel's schedule.
+   Add this command to your servers cronjob to make it run: 
+   'cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1'
+   For manual data update use this url /manual-import
+6. Set app's API key to APP_API_KEY variable in .env. External applications must send 
+   request with this header to access app's API: 'Authorization' => 'your-api-key'.
+   Empty string could be used if no key is set.
+7. Domains list with ranks is accessible by this url: /api/domains
