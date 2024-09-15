@@ -16,11 +16,11 @@ class OpenPageRankService
     private string $api_key;
     private Client $client;
 
-    public function __construct()
+    public function __construct(Client $client = null)
     {
         $this->api_url = config('openrankapi.url');
         $this->api_key = config('openrankapi.key');
-        $this->client = new Client();
+        $this->client = $client ?? new Client();
     }
 
     /**
