@@ -3,6 +3,7 @@
 ## Introduction
 
 This application is designed to collect page rank metrics for specified domains on a daily basis and expose the collected data through the app's API. It utilizes the Open Page Rank API to gather information for domains listed in a file.
+Make sure you have laravel installed on your computer or server before running
 
 ## Instructions
 
@@ -12,6 +13,10 @@ This application is designed to collect page rank metrics for specified domains 
     - Run the following command to create the required database table:
       ```bash
       php artisan migrate
+      ```
+    - Run laravel application by:
+      ```bash
+      php artisan serve
       ```
 
 2. **Obtain API Key**
