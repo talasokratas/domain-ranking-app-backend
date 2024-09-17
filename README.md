@@ -55,4 +55,7 @@ Make sure you have laravel installed on your computer or server before running
 7. **Access Domain Data**
 
     - The list of domains with ranks is accessible via the following URL: `/api/domains`.
+    - api accepts these query params: 
+         page - number of pagination page, default pagination is 100 records on page;
+         search - string, used to filter domains by name;
 
